@@ -1,0 +1,35 @@
+{
+    "development": {
+      "username": "srifh",
+      "password": "SRias##2050",
+      "database": "MockTestDB",
+      "host": "3.111.29.79",
+      "dialect": "mysql",
+      "define": {
+        "timestamps": false
+      },
+      "logging": false
+    },
+    "test": {
+      "username": "srifh",
+      "password": "SRias##2050",
+      "database": "MockTestDB",
+      "host": "3.111.29.79",
+      "dialect": "mysql",
+      "define": {
+        "timestamps": false
+      },
+      "logging": false
+    },
+    "production": {
+      "username": "srifh",
+      "password": "SRias##2050",
+      "database": "MockTestDB",
+      "host": "3.111.29.79",
+      "dialect": "mysql",
+      "define": {
+        "timestamps": false
+      },
+      "logging": false
+    }
+  }

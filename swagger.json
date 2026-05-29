@@ -1,0 +1,179 @@
+{
+    "swagger":"2.0",
+    "info":{
+       "description":"This is a sample server Petstore server.  You can find out more about Swagger at [http://swagger.io](http://swagger.io) or on [irc.freenode.net, #swagger](http://swagger.io/irc/).  For this sample, you can use the api key `special-key` to test the authorization filters.",
+       "version":"1.0.6",
+       "title":"Swagger gd illuminations",
+       "termsOfService":"http://swagger.io/terms/",
+       "contact":{
+          "email":"apiteam@swagger.io"
+       },
+       "license":{
+          "name":"Apache 2.0",
+          "url":"http://www.apache.org/licenses/LICENSE-2.0.html"
+       }
+    },
+    "host":"petstore.swagger.io",
+    "basePath":"/",
+    "tags":[
+       {
+          "name":"USER-AUTH",
+          "description":"Website apis",
+          "externalDocs":{
+             "description":"Find out more",
+             "url":"http://swagger.io"
+          }
+       },
+       {
+         "name":"USER-HOME",
+         "description":"Website apis",
+         "externalDocs":{
+            "description":"Find out more",
+            "url":"http://swagger.io"
+         }
+      },
+       {
+          "name":"ADMIN",
+          "description":"Admin apis",
+          "externalDocs":{
+             "description":"Find out more",
+             "url":"http://swagger.io"
+          }
+       }
+    ],
+    "schemes":[
+       "http",
+       "https"
+    ],
+    "paths":{
+       "/api/v1/user/register":{
+         "post": {
+            "tags": ["USER-AUTH"],
+            "summary": "Check Mobile number already exists",
+            "description": "Using this api we will check user mobile no exists or not, according these api response we will call login or signup api",
+            "operationId": "register",
+            "consumes": ["multipart/form-data"],
+            "produces": ["application/json"],
+            "parameters": [
+              {
+                "name": "reqData",
+                "in": "formData",
+                "description": "Encrypted data",
+                "required": true,
+                "type": "string",
+                "format": "string"                
+              }             
+            ],
+            "responses": {
+              "200": {
+                "description": "successful operation",
+                "schema": {
+                  "$ref": "#/definitions/ApiResponse"
+                }
+              }
+            }
+          }
+       },
+       "/api/v1/user/login":{
+          "post":{
+             "tags":[
+                "USER-AUTH"
+             ],
+             "summary": "Check Mobile number already exists",
+             "description": "Using this api we will check user mobile no exists or not, according these api response we will call login or signup api",
+             "operationId": "register",
+             "consumes": ["multipart/form-data"],
+             "produces": ["application/json"],
+             "parameters": [
+               {
+                 "name": "reqData",
+                 "in": "formData",
+                 "description": "Encrypted data",
+                 "required": true,
+                 "type": "string",
+                 "format": "string"                
+               }             
+             ],
+             "responses": {
+               "200": {
+                 "description": "successful operation",
+                 "schema": {
+                   "$ref": "#/definitions/ApiResponse"
+                 }
+               }
+             },
+             "security":[
+                {
+                   "Authorization":[
+                      
+                   ]
+                }               
+             ]
+          }
+       },
+       "/api/v1/user/teacher-details": {
+         "get": {
+            "tags": ["USER-HOME"],
+            "summary": "Get teacher  details",
+            "description": "Get teacher  details with lecture, article and course",
+            "operationId": "teacher-details",
+            "parameters":[
+              {
+                "name": "",
+                "in": "path",
+                "description": "Pass encrypted query params",
+                "required": true,
+                "type": "string",
+                "format": "string"                        
+              }             
+            ],              
+            "responses": {
+              "200": {
+                "description": "successful operation",
+                "schema": {
+                  "$ref": "#/definitions/ApiResponse"
+                }
+              }
+            }     
+       }
+      }   
+    },
+    "securityDefinitions":{
+       "Authorization":{
+          "type":"apiKey",
+          "name":"Authorization",
+          "in":"header",
+          "description":"  Enter the token like `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MzkyZGRhYTA0OGZhMGE5NjdhZDM5Y2MiLCJ1c2VyX3R5cGUiOiJidXllciIsImlhdCI6MTY3MDU2OTQ0MH0.bzoUQ7cGWEC6IImEBk5cDJarc_UknEFdqFJFTVWAL70` "
+       },      
+       "petstore_auth":{
+          "type":"oauth2",
+          "authorizationUrl":"https://petstore.swagger.io/oauth/authorize",
+          "flow":"implicit",
+          "scopes":{
+             "read:pets":"read your pets",
+             "write:pets":"modify pets in your account"
+          }
+       }
+    },
+    "definitions":{
+       "ApiResponse":{
+          "type":"object",
+          "properties":{
+             "code":{
+                "type":"integer",
+                "format":"int32"
+             },
+             "type":{
+                "type":"string"
+             },
+             "message":{
+                "type":"string"
+             }
+          }
+       }
+    },
+    "externalDocs":{
+       "description":"Find out more about Swagger",
+       "url":"http://swagger.io"
+    }
+ }
