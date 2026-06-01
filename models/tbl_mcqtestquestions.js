@@ -10,6 +10,17 @@ module.exports = (sequelize, DataTypes) => {
         as: 'Test'
       });
 
+      tbl_mcqtestquestions.belongsTo(models.tbl_examtype, {
+        foreignKey: 'ExamTypeId',
+        targetKey: 'id',
+        as: 'ExamType'
+      });
+      tbl_mcqtestquestions.belongsTo(models.tbl_subjects, {
+        foreignKey: 'SubjectId',
+        targetKey: 'SubjectID', // ✅ correct
+        as: 'Subject'
+      });
+
       // Add other associations if needed
     }
   }

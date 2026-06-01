@@ -3,6 +3,7 @@ const { Op } = require("sequelize");
 const { Validator } = require("node-input-validator");
 const { decrypter } = require("../../../helper/crypto");
 const { success, failed, failedValidation } = require("../../../helper/response");
+const { tbl_examtype, tbl_subjects } = require("../../../../models");
 
 
 // ✅ CREATE QUESTION
@@ -122,7 +123,6 @@ exports.deleteQuestion = async (req, res) => {
 
 
 
-// ✅ LIST QUESTIONS (WITH PAGINATION + SEARCH)
 exports.listQuestions = async (req, res) => {
     try {
         let request = {};
@@ -135,13 +135,18 @@ exports.listQuestions = async (req, res) => {
         const pageSize = request.limit ? parseInt(request.limit) : 10;
         const page = request.page ? parseInt(request.page) : 1;
         const offset = (page - 1) * pageSize;
+        const search = request.search ? request.search : null;
 
-        const whereCondition = { isdeleted: 0 };
+        const whereCondition = { isdeleted: false };
 
-        if (request.search) {
-            whereCondition.Question = {
-                [Op.substring]: request.search,
-            };
+        if (search) {
+            whereCondition[Op.or] = [
+                { Question: { [Op.substring]: search } },
+                { Option1: { [Op.substring]: search } },
+                { Option2: { [Op.substring]: search } },
+                { Option3: { [Op.substring]: search } },
+                { Option4: { [Op.substring]: search } },
+            ];
         }
 
         if (request.ExamTypeId) {
@@ -152,11 +157,27 @@ exports.listQuestions = async (req, res) => {
             whereCondition.SubjectId = request.SubjectId;
         }
 
+        if (request.status) {
+            whereCondition.status = request.status;
+        }
+
         const result = await MCQ.findAndCountAll({
             where: whereCondition,
             order: [["QuestionID", "DESC"]],
             limit: pageSize,
             offset,
+            include: [
+                {
+                    model: tbl_examtype,
+                    as: "ExamType",
+                    attributes: ["id", "name"]
+                },
+                {
+                    model: tbl_subjects,
+                    as: "Subject",
+                    attributes: ["SubjectID", "SubjectName"]
+                }
+            ]
         });
 
         return success(res, "Questions fetched successfully", {

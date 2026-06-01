@@ -16,6 +16,8 @@ const DailyQuizController = require("../../app/controller/v1/admin/DailyQuizCont
 const CourseController = require("../../app/controller/v1/admin/CourseController");
 const SubjectController = require("../../app/controller/v1/admin/SubjectController");
 const QuestionController = require("../../app/controller/v1/admin/QuestionController");
+const ExamController = require("../../app/controller/v1/admin/ExamController");
+const ExamCourseController = require("../../app/controller/v1/admin/ExamCourseController");
 
 router.post("/login", LoginController.login);
 router.post("/forgot-Password", LoginController.forgotPassword);
@@ -120,6 +122,17 @@ router.get("/examtype-active-list", auth, ExamTypeController.listActiveExamTypes
 router.post("/examtype-status", auth, ExamTypeController.changeExamTypeStatus);
 router.post("/examtype-delete", auth, ExamTypeController.deleteExamType);
 router.get("/examtype-dropdown", auth, ExamTypeController.getExamTypeDropdown);
+
+router.get("/exams-list", auth, ExamController.listExams);
+router.post("/exam-create", auth, ExamController.createExam);
+router.post("/exam-edit", auth, ExamController.updateExam);
+router.post("/exam-delete", auth, ExamController.deleteExam);
+router.post("/exam-show-in-catalogue-status", auth, ExamController.toggleShowInCatalogue);
+router.post("/exam-free-trial-status", auth, ExamController.toggleAllFreeTrial);
+router.post("/exam-open-enrollment-status", auth, ExamController.toggleOpenEnrollment);
+router.get("/exam-dropdown", auth, ExamController.examDropdown);
+
+router.get("/exam-courses-list", auth, ExamCourseController.listCourses);
 
 //daily quiz
 router.get("/dailyquiz/list", auth, DailyQuizController.getDailyQuiz);
