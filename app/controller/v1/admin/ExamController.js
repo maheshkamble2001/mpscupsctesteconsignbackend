@@ -135,7 +135,6 @@ exports.createExam = async function (req, res) {
 };
 
 exports.updateExam = async function (req, res) {
-    const transaction = await Exam.sequelize.transaction();
 
     try {
         let requests = await decrypter(req.body);
@@ -452,7 +451,7 @@ exports.toggleOpenEnrollment = async function (req, res) {
 exports.examDropdown = async function (req, res) {
     try {
         const exams = await Exam.findAll({
-            where: { isdeleted: 0, ShowInCatalogue: true },
+            where: { isdeleted: 0 },
             attributes: ['ExamId', 'ExamName'],
             order: [['ExamName', 'ASC']]
         });

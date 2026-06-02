@@ -133,6 +133,16 @@ router.post("/exam-open-enrollment-status", auth, ExamController.toggleOpenEnrol
 router.get("/exam-dropdown", auth, ExamController.examDropdown);
 
 router.get("/exam-courses-list", auth, ExamCourseController.listCourses);
+router.post("/exam-courses-create", auth, ExamCourseController.createCourse);
+router.post("/exam-courses-edit", auth, ExamCourseController.updateCourse);
+router.post("/exam-courses-delete", auth, ExamCourseController.deleteCourse);
+router.post("/exam-courses-update-status", auth, ExamCourseController.updateCourseStatus);
+router.get("/course-dropdown", auth, ExamCourseController.courseDropdown);
+
+router.get("/course-curriculum-list", auth, ExamCourseController.listCourseCurriculum);
+router.post("/course-curriculum-create", auth, ExamCourseController.createCurriculum);
+router.post("/course-curriculum-edit", auth, ExamCourseController.updateCurriculum);
+router.post("/course-curriculum-delete", auth, ExamCourseController.deleteCurriculum);
 
 //daily quiz
 router.get("/dailyquiz/list", auth, DailyQuizController.getDailyQuiz);

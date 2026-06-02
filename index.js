@@ -95,6 +95,7 @@ app.use("/result", express.static("result"));
 app.use("/invoice", express.static("invoice"));
 app.use("/userdocuments", express.static("userdocuments"));
 app.use("/uploadDocs", express.static("uploadDocs"));
+app.use("/storedata", express.static("storedata"));
 
 app.use(bodyParser.json());
 if (environment == "production") {

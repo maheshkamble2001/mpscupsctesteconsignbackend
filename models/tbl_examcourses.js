@@ -77,6 +77,10 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.BOOLEAN, // true = EMI available
       defaultValue: false
     },
+    Status: {
+      type: DataTypes.BOOLEAN, // true = active, false = inactive
+      defaultValue: true
+    },
 
     addedon: {
       type: DataTypes.DATE,
