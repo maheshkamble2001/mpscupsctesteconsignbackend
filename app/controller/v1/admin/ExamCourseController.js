@@ -171,7 +171,13 @@ exports.listCourses = async (req, res) => {
                 model: Exam,
                 as: 'Exam',
                 attributes: ['ExamId', 'ExamName']
-            }],
+            },
+            {
+                model: Curriculum,
+                as: 'CourseCurriculum',
+                attributes: ['CurriculumId', 'CourseId', ['CourseCarriculam', 'Description'], "Duration", 'ModuleName']
+            }
+            ],
             order: [['CourseId', 'DESC']],
             distinct: true,
             limit,
@@ -265,7 +271,7 @@ exports.courseDropdown = async (req, res) => {
     try {
         const courses = await Course.findAll({
             where: { isdeleted: 0 },
-            attributes: ['CourseId', 'CourseTitle'],
+            attributes: ['CourseId', 'CourseTitle', "CourseCode"],
             order: [['CourseTitle', 'ASC']]
         });
 
@@ -307,7 +313,7 @@ exports.listCourseCurriculum = async (req, res) => {
                 as: 'Course',
                 attributes: ['CourseId', 'CourseTitle']
             }],
-            attributes: ['CurriculumId', 'CourseId', ['CourseCarriculam', 'Description'], 'ModuleName'],
+            attributes: ['CurriculumId', 'CourseId', ['CourseCarriculam', 'Description'], "Duration", 'ModuleName'],
             order: [['CurriculumId', 'DESC']],
             distinct: true,
             limit,

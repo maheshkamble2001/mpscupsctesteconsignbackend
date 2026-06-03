@@ -12,6 +12,11 @@ module.exports = (sequelize, DataTypes) => {
         as: 'Exam'
       });
 
+      tbl_examcourses.hasMany(models.tbl_coursecurriculum, {
+        foreignKey: 'CourseId',
+        sourceKey: 'CourseId',
+        as: 'CourseCurriculum'
+      });
     }
   }
 

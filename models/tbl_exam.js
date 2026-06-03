@@ -89,7 +89,7 @@ module.exports = (sequelize, DataTypes) => {
         },
         AllFreeTrial: {
             type: DataTypes.BOOLEAN,
-            defaultValue: false,
+            defaultValue: true,
             allowNull: true
         },
         OpenEnrollment: {
