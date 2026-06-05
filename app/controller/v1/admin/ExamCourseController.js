@@ -35,7 +35,7 @@ exports.createCourse = async (req, res) => {
         let logoPath = null;
 
         if (req.files && req.files.CourseCoverImage) {
-            const file = req.files.CourseCoverImage;
+            const file = req.files.CourseCoverImage[0];
 
             const allowedTypes = ["image/jpeg", "image/png", "image/webp"];
             if (!allowedTypes.includes(file.mimetype)) {
@@ -115,7 +115,6 @@ exports.updateCourse = async (req, res) => {
         // ✅ Handle image upload (optional in update)
         if (req.files && req.files.CourseCoverImage) {
             const file = req.files.CourseCoverImage;
-
             const allowedTypes = ["image/jpeg", "image/png", "image/webp"];
             if (!allowedTypes.includes(file.mimetype)) {
                 return failed(res, "Invalid course cover image type");

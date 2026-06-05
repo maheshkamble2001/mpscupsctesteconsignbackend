@@ -173,7 +173,7 @@ exports.getSubjectDropdown = async function (req, res) {
   try {
     const subjects = await Subject.findAll({
       where: {
-        IsDeleted: 0,
+        // IsDeleted: 0,
         Status: 1,
       },
       attributes: ["SubjectID", "SubjectName"],

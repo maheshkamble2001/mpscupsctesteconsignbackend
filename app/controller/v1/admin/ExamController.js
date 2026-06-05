@@ -461,3 +461,36 @@ exports.examDropdown = async function (req, res) {
         return failed(res, error.message);
     }
 };
+
+exports.getExamDetails = async function (req, res) {
+    try {
+        let requests = await decrypter(req.query);
+        if (!requests) return failed(res, "Internal server error");
+        const v = new Validator(requests, {
+            ExamId: 'required|integer'
+        });
+        if (!(await v.check())) return failedValidation(res, v);
+
+        const exam = await Exam.findOne({
+            where: { ExamId: requests.ExamId, isdeleted: 0 },
+            include: [
+                {
+                    model: ExamType,
+                    as: 'ExamType',
+                    attributes: ['id', 'name']
+                },
+                {
+                    model: Subjects,
+                    as: 'Subjects',
+                    attributes: ['SubjectId', 'SubjectName']
+                }
+            ]
+        });
+
+        if (!exam) return failed(res, "Exam not found");
+
+        return success(res, "Exam details fetched successfully", exam);
+    } catch (error) {
+        return failed(res, error.message);
+    }
+};
