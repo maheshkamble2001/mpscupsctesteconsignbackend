@@ -19,6 +19,7 @@ const QuestionController = require("../../app/controller/v1/admin/QuestionContro
 const ExamController = require("../../app/controller/v1/admin/ExamController");
 const ExamCourseController = require("../../app/controller/v1/admin/ExamCourseController");
 const ExamTestController = require("../../app/controller/v1/admin/ExamTestController");
+const UpcomingExamController = require("../../app/controller/v1/admin/UpcomingExamController");
 
 router.post("/login", LoginController.login);
 router.post("/forgot-Password", LoginController.forgotPassword);
@@ -73,6 +74,8 @@ router.post("/student-delete", auth, StudentController.deleteStudent);
 router.get("/students-all-list", auth, StudentController.listStudents);
 router.post("/student-status", auth, StudentController.statusStudent);
 router.get("/student-details", auth, StudentController.getStudentDetails);
+router.get("/student-exams", auth, StudentController.studentWiseExams);
+router.post("/assign-exams-to-student", auth, StudentController.assignExamsToStudent);
 
 // Test Type routes
 router.post("/testtype-create", auth, TesttypeController.createTestType);
@@ -187,5 +190,11 @@ router.post("/test/add", auth, ExamTestController.createTest);
 router.post("/test/edit", auth, ExamTestController.updateTest);
 router.post("/test/delete", auth, ExamTestController.deleteTest);
 router.post("/test/status", auth, ExamTestController.updateIsShuffleStatus);
+
+router.get("/upcoming-exams/list", auth, UpcomingExamController.listUpcomingExams);
+router.post("/upcoming-exams/add", auth, UpcomingExamController.addUpcomingExam);
+router.post("/upcoming-exams/edit", auth, UpcomingExamController.updateUpcomingExam);
+router.post("/upcoming-exams/delete", auth, UpcomingExamController.deleteUpcomingExam);
+router.post("/upcoming-exams/status", auth, UpcomingExamController.updateExamStatus);
 
 module.exports = router;
