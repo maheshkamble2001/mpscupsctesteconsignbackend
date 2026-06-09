@@ -421,3 +421,22 @@ exports.assignExamsToStudent = async (req, res) => {
 };
 
 
+exports.deleteStudentExam = async (req, res) => {
+    try {
+        const request = await decrypter(req.body);
+        const v = new Validator(request, { id: 'required|integer' });
+        if (await v.fails()) return failedValidation(res, v);
+        console.log(request)
+        const student = await StudentExam.findOne({
+            where: { id: request.id }
+        });
+        if (!student) return failed(res, "Exam is not found");
+
+        await StudentExam.update({ IsDeleted: true }, { where: { id: request.id } });
+
+        return success(res, "Exam deleted successfully.");
+    } catch (error) {
+        console.error("deleteStudentExam error:", error);
+        return failed(res, error.message);
+    }
+};

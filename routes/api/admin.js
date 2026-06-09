@@ -76,6 +76,7 @@ router.post("/student-status", auth, StudentController.statusStudent);
 router.get("/student-details", auth, StudentController.getStudentDetails);
 router.get("/student-exams", auth, StudentController.studentWiseExams);
 router.post("/assign-exams-to-student", auth, StudentController.assignExamsToStudent);
+router.post("/delete-student-exam", auth, StudentController.deleteStudentExam);
 
 // Test Type routes
 router.post("/testtype-create", auth, TesttypeController.createTestType);
