@@ -46,7 +46,10 @@ exports.studentLogin = async function (req, res) {
 
         const student = await Students.findOne({
             where: {
-                EmailID: requests.username,
+                [Op.or]: [
+                    { EmailID: requests.username },
+                    { Mobile: requests.username }
+                ],
                 IsDeleted: false
             },
             attributes: [
@@ -81,7 +84,7 @@ exports.studentLogin = async function (req, res) {
             mobile: student.Mobile,
         };
 
-        return success(res, "Login successful", data);
+        return success(res, "Login successfully!", data);
 
     } catch (error) {
         console.error("student Login error:", error);
