@@ -38,6 +38,51 @@ exports.GetTestList = async function (req, res) {
     let requests = await decrypter(req.query);
     if (!requests || Object.keys(requests).length === 0) requests = req.query;
 
+    const tests = await Tests.findAll({
+      where: {
+        ...params,
+        IsDeleted: 0,
+      },
+      order: [["TestType", "ASC"]],
+    });
+
+    let retaketestflag = false;
+    var decoded = jwtverify.verify(
+      requests.access_token,
+      process.env.JWT_SECRET,
+    );
+    let studentId = decoded?.studentid;
+
+    for (let i = 0; i < tests.length; i++) {
+      const test = tests[i];
+      let findinresult = await Mcqtestuserresults.findOne({
+        where: {
+          studentid: studentId,
+          testid: test.TestID,
+        },
+      });
+
+      if (findinresult) {
+        retaketestflag = true;
+      }
+      test.setDataValue("retakeflag", !!findinresult);
+    }
+
+    if (!tests.length) return failed(res, "Test not found");
+
+    return success(res, "Test fetched successfully", { tests });
+  } catch (error) {
+    return failed(res, error.message);
+  }
+};
+
+exports.GetTestList2 = async function (req, res) {
+  try {
+    // Use decrypted or normal request
+    let params = {};
+    let requests = await decrypter(req.query);
+    if (!requests || Object.keys(requests).length === 0) requests = req.query;
+
     // Fetch all active test types without pagination or search
 
     if (requests.testtypeid) {
